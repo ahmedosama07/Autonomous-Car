@@ -8,15 +8,15 @@
 const int IR_1=VP;           //pin of first IR sensor
 const int IR_2=VN;          //pin of second IR sensor
 const int IR_3=D34;        //pin of third IR sensor
-const int IR_4=D35;        //pin of fourth IR sensor
-const int IR_5=D33;        //pin of fifth IR sensor
+const int IR_4=D35;        //pin of fourth IR sensor **this sensor should be at the right of the body
+const int IR_5=D33;        //pin of fifth IR sensor **this sensor should be at the right of the body
 
 //the values measured by IR sensors
 float val_1=0;             //value measured by first IR sensor
 float val_2=0;             //value measured by second IR sensor
 float val_3=0;            //value measured by third IR sensor
 float val_4=0;            //value measured by fourth IR sensor
-float val_5=0;            //value measured by fifth IR sensor
+float val_5=0;            //value measured by fifth IR sensor 
 
 //motor controles
 int MC_1_R=D21;
@@ -53,9 +53,23 @@ void loop() {
   //if conditions for the movement of the car
   if((val_1)&&(val_2)&&(val_3)&&(val_4)&&(val_5)==1)
   {
-    dir='f'
-    forward(dir)
+    digitalRead(MC_1_R,HIGH);
+    digitalRead(MC_1_l,HIGH);
+    digitalRead(MC_2_R,HIGH);
+    digitalRead(MC_2_l,HIGH);
   }
+  else if( (val_5)==0){
+    digitalRead(MC_1_R,LOW);
+    digitalRead(MC_1_l,HIGH);
+    digitalRead(MC_2_R,LOW);
+    digitalRead(MC_2_l,HIGH);
+  }
+  else if( (val_4)==0){
+    digitalRead(MC_1_R,HIGH);
+    digitalRead(MC_1_l,LOW);
+    digitalRead(MC_2_R,HIGH);
+    digitalRead(MC_2_l,LOW);
+    
   }
   
 
