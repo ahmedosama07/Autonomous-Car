@@ -24,8 +24,6 @@ int MC_1_l=D22;
 int MC_2_R=D23;
 int MC_2_l=D25;
 
-//direction of the movement
-char dir;
 
 
 void setup() {
@@ -38,8 +36,6 @@ void setup() {
   pinMode(MC_1_l,OUTPUT);
   pinMode(MC_2_R,OUTPUT);
   pinMode(MC_2_l,OUTPUT);
-  Serial.begin(11600);
-  
 }
 
 void loop() {
@@ -51,7 +47,7 @@ void loop() {
 
 
   //if conditions for the movement of the car
-  if((val_1)&&(val_2)&&(val_3)&&(val_4)&&(val_5)==1)
+  if(val_1==1)&&(val_2==1)&&(val_3==1)&&(val_4==1)&&(val_5==1)
   {
     digitalRead(MC_1_R,HIGH);
     digitalRead(MC_1_l,HIGH);
@@ -64,12 +60,12 @@ void loop() {
     digitalRead(MC_2_R,LOW);
     digitalRead(MC_2_l,HIGH);
   }
-  else if( (val_4)==0){
+  else ( (val_4)==0){
     digitalRead(MC_1_R,HIGH);
     digitalRead(MC_1_l,LOW);
     digitalRead(MC_2_R,HIGH);
     digitalRead(MC_2_l,LOW);
-    
+   
   }
   
 
