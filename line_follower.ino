@@ -47,20 +47,20 @@ void loop() {
 
 
   //if conditions for the movement of the car
-  if(val_1==1)&&(val_2==1)&&(val_3==1)&&(val_4==1)&&(val_5==1)
+  if(val_1==1)&&(val_2==1)&&(val_3==1)&&(val_4==1)&&(val_5==1)       //condition that the line is straight for the robot 
   {
     digitalRead(MC_1_R,HIGH);
-    digitalRead(MC_1_l,HIGH);
-    digitalRead(MC_2_R,HIGH);
+    digitalRead(MC_1_l,LOW);
+    digitalRead(MC_2_R,LOW);
     digitalRead(MC_2_l,HIGH);
   }
-  else if( (val_5)==0){
+  else if( (val_5)==0){                                             //condition that the line is left for the robot 
     digitalRead(MC_1_R,LOW);
     digitalRead(MC_1_l,HIGH);
     digitalRead(MC_2_R,LOW);
     digitalRead(MC_2_l,HIGH);
   }
-  else ( (val_4)==0){
+  else ( (val_4)==0){                                             //condition that the line is right for the robot
     digitalRead(MC_1_R,HIGH);
     digitalRead(MC_1_l,LOW);
     digitalRead(MC_2_R,HIGH);
