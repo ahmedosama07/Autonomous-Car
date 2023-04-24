@@ -51,8 +51,8 @@ void loop() {
   {
     digitalRead(MC_1_R,HIGH);
     digitalRead(MC_1_l,LOW);
-    digitalRead(MC_2_R,LOW);
-    digitalRead(MC_2_l,HIGH);
+    digitalRead(MC_2_R,HIGH);
+    digitalRead(MC_2_l,LOW);
   }
   else if( (val_5)==0){                                             //condition that the line is left for the robot 
     digitalRead(MC_1_R,LOW);
