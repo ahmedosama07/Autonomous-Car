@@ -1,20 +1,27 @@
+#ifndef PID_h
+#define PID_h
 #include <Arduino.h>
-static int last_time=0;
-class PID{
+class PID
+{
   public:
+  PID(double kP, double kI, double kD);
+  double calc(double input);
+  void set_constants(double kP, double kI, double kD);
+  void set_setpoint(double setPoint);
+  void set_constrains(double lower_bound, double upper_bound);
+  private:
+    bool is_angle = 0;
     double kp=0,ki=0,kd=0;
-    double error=0;
+
     double acc=0;
-    double prevMV=0;
-    double time1=0;
-    double diff=0;
-    double PV=0;
+
+    double last_mv=0;
+    long long last_time=0;
+
     double setpoint=0;
-    double MV=0;
-    int lower=-255, upper=255;
-    double dt;
-    PID();
-    double calc(double input);
-    double set_constants(double kP, double kI, double kD);
-    double set_setPoint(double setPoint);
+    double lower=-400, upper=400;
+
+    bool enabled = 1;
+
 };
+#endif
