@@ -47,11 +47,11 @@ void setup()
 
 void loop()
 {
-  val_1 = digitalread(IR_1); // read the digital value from the first sensor
-  val_2 = digitalread(IR_2); // read the digital value from the second sensor
-  val_3 = digitalread(IR_3); // read the digital value from the third sensor
-  val_4 = digitalread(IR_4); // read the digital value from the fourth sensor
-  val_5 = digitalread(IR_5); // read the digital value from the fifth sensor
+  val_1 = digitalRead(IR_1); // read the digital value from the first sensor
+  val_2 = digitalRead(IR_2); // read the digital value from the second sensor
+  val_3 = digitalRead(IR_3); // read the digital value from the third sensor
+  val_4 = digitalRead(IR_4); // read the digital value from the fourth sensor
+  val_5 = digitalRead(IR_5); // read the digital value from the fifth sensor
 
   // if conditions for the movement of the car
   if (val_1 == 1)
@@ -72,35 +72,34 @@ void loop()
 
     void forward()
     {
-      digitalWrite(MC_1_R, LOW);
-      digitalWrite(MC_1_l, LOW);
-      digitalWrite(MC_2_R, LOW);
-      digitalWrite(MC_2_l, LOW);
+
       analogWrite(EN1,R_motorspeed);
       analogWrite(EN2,l_motorspeed);
       digitalWrite(MC_1_R, HIGH);
+      digitalWrite(MC_1_l, LOW);
+      digitalWrite(MC_2_R, LOW);
       digitalWrite(MC_2_l, HIGH);
     }
 
   void left()
   {
-    digitalWrite(MC_1_R, LOW);
-    digitalWrite(MC_1_l, LOW);
+    analogWrite(EN1,R_motorspeed);
+    analogWrite(EN2,220);
     digitalWrite(MC_2_R, LOW);
-    digitalWrite(MC_2_l, LOW);
-    analogWrite(EN2,l_motorspeed);
     digitalWrite(MC_2_l, HIGH);
-    delay(1000);
+    digitalWrite(MC_1_R, HIGH);
+    digitalWrite(MC_1_l, LOW);
+    
   }
 
   void right()
   {
+    analogWrite(EN1,220);
+     analogWrite(EN2,l_motorspeed);
+    digitalWrite(MC_1_R, HIGH);
     digitalWrite(MC_1_R, LOW);
     digitalWrite(MC_1_l, LOW);
-    digitalWrite(MC_2_R, LOW);
-    digitalWrite(MC_2_l, LOW);
-    analogWrite(EN1,R_motorspeed);
-    digitalWrite(MC_1_R, HIGH);
-    delay(1000);
+     digitalWrite(MC_2_R, LOW);
+    digitalWrite(MC_2_l, HIGH);
   }
 }
