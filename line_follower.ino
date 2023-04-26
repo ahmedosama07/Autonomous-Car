@@ -97,7 +97,6 @@ void loop()
     analogWrite(EN1,220);
      analogWrite(EN2,l_motorspeed);
     digitalWrite(MC_1_R, HIGH);
-    digitalWrite(MC_1_R, LOW);
     digitalWrite(MC_1_l, LOW);
      digitalWrite(MC_2_R, LOW);
     digitalWrite(MC_2_l, HIGH);
