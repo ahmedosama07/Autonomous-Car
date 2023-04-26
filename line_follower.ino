@@ -21,11 +21,11 @@ float val_5 = 0; // value measured by fifth IR sensor
 // Right motor controler
 int MC_1_R = 21;
 int MC_1_l = 22;
-int R_motor = 180;
+int R_motor = 180;  //speed of right motor
 // Second motor controler
 int MC_2_R = 23;
 int MC_2_l = 25;
-int l_motor = 180;
+int l_motor = 180;  //speed of left motor
 
 void setup()
 {
@@ -52,10 +52,8 @@ void loop()
   if (val_1 == 1)
     &&(val_2 == 1) && (val_3 == 1) && (val_4 == 1) && (val_5 == 1) // condition that the line is straight for the robot
     {
-      digitalRead(MC_1_R, HIGH);
-      digitalRead(MC_1_l, LOW);
-      digitalRead(MC_2_R, LOW);
-      digitalRead(MC_2_l, HIGH);
+      forward()
+      
     }
   else if ((val_5) == 0)
   { // condition that the line is left for the robot
@@ -67,21 +65,37 @@ void loop()
       void right() // condition that the line is right for the robot
     }
 
+    void forward()
+    {
+      digitalRead(MC_1_R, LOW);
+      digitalRead(MC_1_l, LOW);
+      digitalRead(MC_2_R, LOW);
+      digitalRead(MC_2_l, LOW);
+      analogWrite(MC_1_R,R_motor);
+      analogWrite(MC_2_l,l_motor);
+      digitalRead(MC_1_R, HIGH);
+      digitalRead(MC_2_l, HIGH);
+    }
+
   void left()
   {
     digitalRead(MC_1_R, LOW);
     digitalRead(MC_1_l, LOW);
     digitalRead(MC_2_R, LOW);
+    digitalRead(MC_2_l, LOW);
+    analogWrite(MC_2_l,l_motor);
     digitalRead(MC_2_l, HIGH);
     delay(1000);
   }
 
   void right()
   {
-    digitalRead(MC_1_R, HIGH);
+    digitalRead(MC_1_R, LOW);
     digitalRead(MC_1_l, LOW);
     digitalRead(MC_2_R, LOW);
     digitalRead(MC_2_l, LOW);
+    analogWrite(MC_2_R,R_motor);
+    digitalRead(MC_1_R, HIGH);
     delay(1000);
   }
 }
