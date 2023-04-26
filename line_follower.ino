@@ -67,35 +67,35 @@ void loop()
 
     void forward()
     {
-      digitalRead(MC_1_R, LOW);
-      digitalRead(MC_1_l, LOW);
-      digitalRead(MC_2_R, LOW);
-      digitalRead(MC_2_l, LOW);
+      digitalWrite(MC_1_R, LOW);
+      digitalWrite(MC_1_l, LOW);
+      digitalWrite(MC_2_R, LOW);
+      digitalWrite(MC_2_l, LOW);
       analogWrite(MC_1_R,R_motor);
       analogWrite(MC_2_l,l_motor);
-      digitalRead(MC_1_R, HIGH);
-      digitalRead(MC_2_l, HIGH);
+      digitalWrite(MC_1_R, HIGH);
+      digitalWrite(MC_2_l, HIGH);
     }
 
   void left()
   {
-    digitalRead(MC_1_R, LOW);
-    digitalRead(MC_1_l, LOW);
-    digitalRead(MC_2_R, LOW);
-    digitalRead(MC_2_l, LOW);
+    digitalWrite(MC_1_R, LOW);
+    digitalWrite(MC_1_l, LOW);
+    digitalWrite(MC_2_R, LOW);
+    digitalWrite(MC_2_l, LOW);
     analogWrite(MC_2_l,l_motor);
-    digitalRead(MC_2_l, HIGH);
+    digitalWrite(MC_2_l, HIGH);
     delay(1000);
   }
 
   void right()
   {
-    digitalRead(MC_1_R, LOW);
-    digitalRead(MC_1_l, LOW);
-    digitalRead(MC_2_R, LOW);
-    digitalRead(MC_2_l, LOW);
+    digitalWrite(MC_1_R, LOW);
+    digitalWrite(MC_1_l, LOW);
+    digitalWrite(MC_2_R, LOW);
+    digitalWrite(MC_2_l, LOW);
     analogWrite(MC_2_R,R_motor);
-    digitalRead(MC_1_R, HIGH);
+    digitalWrite(MC_1_R, HIGH);
     delay(1000);
   }
 }
