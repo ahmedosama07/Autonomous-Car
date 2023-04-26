@@ -21,7 +21,7 @@ float val_5 = 0; // value measured by fifth IR sensor
 // Right motor controler
 int MC_1_R = 21;
 int MC_1_l = 22;
-int EN=13;
+int EN1=13;
 int R_motorspeed = 180;  //speed of right motor
 // Second motor controler
 int MC_2_R = 23;
@@ -40,6 +40,9 @@ void setup()
   pinMode(MC_1_l, OUTPUT);
   pinMode(MC_2_R, OUTPUT);
   pinMode(MC_2_l, OUTPUT);
+  pinMode(EN1,OUTPUT);
+  pinMode(EN2,OUTPUT);
+
 }
 
 void loop()
