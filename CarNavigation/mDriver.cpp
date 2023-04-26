@@ -54,28 +54,28 @@ void Motor::stop()
    analogWrite(PWM,0);
 }
 
-void forward(Motor left, Motor right, int speed)
+void forward(Motor motor1, Motor motor2, int speed)
 {
-  left.drive(speed);
-  right.drive(speed);
+  motor1.drive(speed);
+  motor2.drive(speed);
 }
-void forward(Motor left, Motor right)
+void forward(Motor motor1, Motor motor2)
 {
-  left.drive(DEFAULTSPEED);
-  right.drive(DEFAULTSPEED);
+  motor1.drive(DEFAULTSPEED);
+  motor2.drive(DEFAULTSPEED);
 }
 
 
-void back(Motor left, Motor right, int speed)
+void back(Motor motor1, Motor motor2, int speed)
 {
   int temp = abs(speed);
-  left.drive(-temp);
-  right.drive(-temp);
+  motor1.drive(-temp);
+  motor2.drive(-temp);
 }
-void back(Motor left, Motor right)
+void back(Motor motor1, Motor motor2)
 {
-  left.drive(-DEFAULTSPEED);
-  right.drive(-DEFAULTSPEED);
+  motor1.drive(-DEFAULTSPEED);
+  motor2.drive(-DEFAULTSPEED);
 }
 void left(Motor left, Motor right, int speed)
 {
@@ -93,14 +93,14 @@ void right(Motor left, Motor right, int speed)
   right.drive(-temp);
   
 }
-void brake(Motor left, Motor right)
+void brake(Motor motor1, Motor motor2)
 {
-  left.brake();
-  right.brake();
+  motor1.brake();
+  motor2.brake();
 }
 
-void stop(Motor left, Motor right)
+void stop(Motor motor1, Motor motor2)
 {
-  left.stop();
-  right.stop();
+  motor1.stop();
+  motor2.stop();
 }
