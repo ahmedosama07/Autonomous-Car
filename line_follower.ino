@@ -1,15 +1,15 @@
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-                                                                                                                                       //@project: line follower robot using esp32,IR sensors,DC motors,PCP
-                                                                                                                                       //@authors:Ahmed Abdelhakem,Ahmed Osama,Mostafa Mohamed,Mazen Mohamed,Mohamed Ashraf
-                                                                                                                                       //@date :24/4/2023
-                                                                                                                                       -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+ //@project: line follower robot using esp32,IR sensors,DC motors,PCP
+ //@authors:Ahmed Abdelhakem,Ahmed Osama,Mostafa Mohamed,Mazen Mohamed,Mohamed Ashraf
+ //@date :24/4/2023
+ -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-                                                                                                                                                                                                                                                                              // the IR sensors of the robot
-                                                                                                                                                                                                                                                                              const int IR_1 = 36; // pin of first IR sensor
-const int IR_2 = 39;                                                                                                                                                                                                                                                                               // pin of second IR sensor
-const int IR_3 = 34;                                                                                                                                                                                                                                                                               // pin of third IR sensor
-const int IR_4 = 35;                                                                                                                                                                                                                                                                               // pin of fourth IR sensor **this sensor should be at the right of the body
-const int IR_5 = 33;                                                                                                                                                                                                                                                                               // pin of fifth IR sensor **this sensor should be at the right of the body
+ // the IR sensors of the robot
+const int IR_1 = 36; // pin of first IR sensor
+const int IR_2 = 39;                                                // pin of second IR sensor
+const int IR_3 = 34;                                               // pin of third IR sensor
+const int IR_4 = 35;                                              // pin of fourth IR sensor **this sensor should be at the right of the body
+const int IR_5 = 33;                                              // pin of fifth IR sensor **this sensor should be at the right of the body
 
 // the values measured by IR sensors
 float val_1 = 0; // value measured by first IR sensor
@@ -57,12 +57,12 @@ void loop()
     }
   else if ((val_5) == 0)
   { // condition that the line is left for the robot
-    void left()
+     left()
   }
   else
     ((val_4) == 0)
     {
-      void right() // condition that the line is right for the robot
+       right() // condition that the line is right for the robot
     }
 
     void forward()
