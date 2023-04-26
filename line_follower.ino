@@ -3,8 +3,9 @@
  //@authors:Ahmed Abdelhakem,Ahmed Osama,Mostafa Mohamed,Mazen Mohamed,Mohamed Ashraf
  //@date :24/4/2023
  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+#include "mDriver.h"      
 
- // the IR sensors of the robot
+// the IR sensors of the robot
 const int IR_1 = 36; // pin of first IR sensor
 const int IR_2 = 39;                                                // pin of second IR sensor
 const int IR_3 = 34;                                               // pin of third IR sensor
@@ -22,13 +23,10 @@ float val_5 = 0; // value measured by fifth IR sensor
 int MC_1_R = 21;
 int MC_1_l = 22;
 int EN1=13;
-int R_motorspeed = 180;  //speed of right motor
 // Second motor controler
 int MC_2_R = 23;
 int MC_2_l = 25;
 int EN2=19;
-int l_motorspeed = 180;  //speed of left motor
-
 void setup()
 {
   pinMode(IR_1, INPUT);
@@ -54,51 +52,22 @@ void loop()
   val_5 = digitalRead(IR_5); // read the digital value from the fifth sensor
 
   // if conditions for the movement of the car
-  if (val_1 == 1)
-    &&(val_2 == 1) && (val_3 == 1) && (val_4 == 1) && (val_5 == 1) // condition that the line is straight for the robot
-    {
-      forward()
-      
-    }
-  else if ((val_5) == 0)&&(((val_4) == 1)
-  {                                // condition that the line is left for the robot
-     left()
-  }
-  else
-    ((val_4) == 0) && ((val_5) == 1)
-    {
-       right()                        // condition that the line is right for the robot
-    }
+ if ((val_1) ==1 || (val_2) ==1 || (val_3) ==1 )
 
-    void forward()
-    {
-
-      analogWrite(EN1,R_motorspeed);
-      analogWrite(EN2,l_motorspeed);
-      digitalWrite(MC_1_R, HIGH);
-      digitalWrite(MC_1_l, LOW);
-      digitalWrite(MC_2_R, LOW);
-      digitalWrite(MC_2_l, HIGH);
-    }
-
-  void left()
-  {
-    analogWrite(EN1,R_motorspeed);
-    analogWrite(EN2,220);
-    digitalWrite(MC_2_R, LOW);
-    digitalWrite(MC_2_l, HIGH);
-    digitalWrite(MC_1_R, HIGH);
-    digitalWrite(MC_1_l, LOW);
-    
-  }
-
-  void right()
-  {
-    analogWrite(EN1,220);
-     analogWrite(EN2,l_motorspeed);
-    digitalWrite(MC_1_R, HIGH);
-    digitalWrite(MC_1_l, LOW);
-     digitalWrite(MC_2_R, LOW);
-    digitalWrite(MC_2_l, HIGH);
-  }
+      { 
+        fwd(DEFAULTSPEED);
+      }
+      else if ((val_4) == 1)
+      {
+        right(MC_2_l,MC_1_R,DEFAULTSPEED);
+      }
+      else if ((val_5) == 1)
+      {
+        left(MC_1_R,MC_2_l,DEFAULTSPEED);
+      }
+      else ((val_1) ==1) && (val_2) ==1 && (val_3) ==1 && (val_4) ==1 && (val_5) ==1 )
+      {
+        brake();
+      }
+      }
 }
