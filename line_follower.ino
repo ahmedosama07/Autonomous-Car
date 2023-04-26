@@ -21,11 +21,13 @@ float val_5 = 0; // value measured by fifth IR sensor
 // Right motor controler
 int MC_1_R = 21;
 int MC_1_l = 22;
-int R_motor = 180;  //speed of right motor
+int EN=13;
+int R_motorspeed = 180;  //speed of right motor
 // Second motor controler
 int MC_2_R = 23;
 int MC_2_l = 25;
-int l_motor = 180;  //speed of left motor
+int EN2=19;
+int l_motorspeed = 180;  //speed of left motor
 
 void setup()
 {
@@ -71,8 +73,8 @@ void loop()
       digitalWrite(MC_1_l, LOW);
       digitalWrite(MC_2_R, LOW);
       digitalWrite(MC_2_l, LOW);
-      analogWrite(MC_1_R,R_motor);
-      analogWrite(MC_2_l,l_motor);
+      analogWrite(EN1,R_motorspeed);
+      analogWrite(EN2,l_motorspeed);
       digitalWrite(MC_1_R, HIGH);
       digitalWrite(MC_2_l, HIGH);
     }
@@ -83,7 +85,7 @@ void loop()
     digitalWrite(MC_1_l, LOW);
     digitalWrite(MC_2_R, LOW);
     digitalWrite(MC_2_l, LOW);
-    analogWrite(MC_2_l,l_motor);
+    analogWrite(EN2,l_motorspeed);
     digitalWrite(MC_2_l, HIGH);
     delay(1000);
   }
@@ -94,7 +96,7 @@ void loop()
     digitalWrite(MC_1_l, LOW);
     digitalWrite(MC_2_R, LOW);
     digitalWrite(MC_2_l, LOW);
-    analogWrite(MC_2_R,R_motor);
+    analogWrite(EN1,R_motorspeed);
     digitalWrite(MC_1_R, HIGH);
     delay(1000);
   }
