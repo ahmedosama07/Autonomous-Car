@@ -56,7 +56,7 @@ void loop()
   // if conditions for the movement of the car
  if ((val_1) ==1) && (val_2) ==1 && (val_3) ==1 && (val_4) ==1 && (val_5) ==1 )
       {
-       back(MC_2_l,MC_1_R);                             //if the condition didn't work change back with reverse  or rotate to find the bath
+       back(MC_2_l,MC_1_R);                             //if the condition didn't work change back with reverseto change the stand of the robot to be on the correct path  
       }
       
       else if ((val_1) ==1 || (val_2) ==1 || (val_3) ==1 )
