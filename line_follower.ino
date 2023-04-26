@@ -1,9 +1,9 @@
--- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+--#include "mDriver.h"   -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
  //@project: line follower robot using esp32,IR sensors,DC motors,PCP
  //@authors:Ahmed Abdelhakem,Ahmed Osama,Mostafa Mohamed,Mazen Mohamed,Mohamed Ashraf
  //@date :24/4/2023
  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-#include "mDriver.h"      
+    
 
 #define motorspeed 200
 // the IR sensors of the robot
@@ -52,23 +52,25 @@ void loop()
   val_4 = digitalRead(IR_4); // read the digital value from the fourth sensor
   val_5 = digitalRead(IR_5); // read the digital value from the fifth sensor
 
-  // if conditions for the movement of the car
- if ((val_1) ==1 || (val_2) ==1 || (val_3) ==1 )
 
+  // if conditions for the movement of the car
+ if ((val_1) ==1) && (val_2) ==1 && (val_3) ==1 && (val_4) ==1 && (val_5) ==1 )
+      {
+       back(MC_2_l,MC_1_R);                             //if the condition didn't work change back with reverse  or rotate to find the bath
+      }
+      
+      else if ((val_1) ==1 || (val_2) ==1 || (val_3) ==1 )
       { 
         fwd(motorspeed);
       }
+      
       else if ((val_4) == 1)
       {
         right(MC_2_l,MC_1_R,motorspeed);
       }
-      else if ((val_5) == 1)
+      
+      else ((val_5) == 1)
       {
         left(MC_1_R,MC_2_l,motorspeed);
-      }
-      else ((val_1) ==1) && (val_2) ==1 && (val_3) ==1 && (val_4) ==1 && (val_5) ==1 )
-      {
-       back(MC_2_l,MC_1_R);
-      }
       }
 }
