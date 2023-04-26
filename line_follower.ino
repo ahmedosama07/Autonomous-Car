@@ -55,14 +55,14 @@ void loop()
       forward()
       
     }
-  else if ((val_5) == 0)
-  { // condition that the line is left for the robot
+  else if ((val_5) == 0)&&(((val_4) == 1)
+  {                                // condition that the line is left for the robot
      left()
   }
   else
-    ((val_4) == 0)
+    ((val_4) == 0) && ((val_5) == 1)
     {
-       right() // condition that the line is right for the robot
+       right()                        // condition that the line is right for the robot
     }
 
     void forward()
