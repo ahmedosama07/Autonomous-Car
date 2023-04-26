@@ -6,12 +6,10 @@
 //used in some functions so you don't have to send a speed
 #define DEFAULTSPEED 255  
 
-
-
 class Motor
 {
   public:
-    // Constructor. Mainly sets up pins.
+    // Constructor. Mainly sets up pins and speed.
     Motor(int In1pin, int In2pin, int PWMpin, int correction);      
 
     // Drive in direction given by sign, at speed given by magnitude of the 
@@ -24,11 +22,7 @@ class Motor
   // Short brake
     void brake();
   // Stop
-    void stop();
-  
-  //set the chip to standby mode.  The drive function takes it out of standby 
-  //(forward, back, left, and right all call drive)
-  void standby(); 
+    void stop(); 
   
   private:
     //variables for the 2 inputs, PWM input, Offset value, and the Standby pin
@@ -37,11 +31,9 @@ class Motor
   //private functions that spin the motor CC and CCW
   void fwd(int speed);
   void rev(int speed);
-
-
 };
 
-//Takes 2 motors and goes forward, if it does not go forward adjust offset 
+//Takes 2 motors and goes forward, if it does not go forward adjust correction factor 
 //values until it does.  These will also take a negative number and go backwards
 //There is also an optional speed input, if speed is not used, the function will
 //use the DEFAULTSPEED constant.
