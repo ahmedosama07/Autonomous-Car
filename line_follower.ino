@@ -68,7 +68,7 @@ void loop()
       }
       else ((val_1) ==1) && (val_2) ==1 && (val_3) ==1 && (val_4) ==1 && (val_5) ==1 )
       {
-        brake();
+       back(MC_2_l,MC_1_R);
       }
       }
 }
