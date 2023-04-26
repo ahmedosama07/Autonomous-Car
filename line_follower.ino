@@ -5,6 +5,7 @@
  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 #include "mDriver.h"      
 
+#define motorspeed 200
 // the IR sensors of the robot
 const int IR_1 = 36; // pin of first IR sensor
 const int IR_2 = 39;                                                // pin of second IR sensor
@@ -55,15 +56,15 @@ void loop()
  if ((val_1) ==1 || (val_2) ==1 || (val_3) ==1 )
 
       { 
-        fwd(DEFAULTSPEED);
+        fwd(motorspeed);
       }
       else if ((val_4) == 1)
       {
-        right(MC_2_l,MC_1_R,DEFAULTSPEED);
+        right(MC_2_l,MC_1_R,motorspeed);
       }
       else if ((val_5) == 1)
       {
-        left(MC_1_R,MC_2_l,DEFAULTSPEED);
+        left(MC_1_R,MC_2_l,motorspeed);
       }
       else ((val_1) ==1) && (val_2) ==1 && (val_3) ==1 && (val_4) ==1 && (val_5) ==1 )
       {
