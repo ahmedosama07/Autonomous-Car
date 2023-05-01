@@ -43,7 +43,7 @@ int PID::calculate(int mv)
 
 void PID::linefollow(Motor leftMotor, Motor rightMotor, int lsp, int rsp)
 {
-  int error = sp;
+  error = sp;
 
   PIDvalue = calculate(error);
   previousError = error;
