@@ -2,23 +2,27 @@
 #include "mDriver.h"
 
 // Motor pins
-#define AIN1 4
-#define BIN1 6
-#define AIN2 3
-#define BIN2 7
-#define PWMA 9
-#define PWMB 10
+#define AIN1 22
+#define BIN1 21
+#define AIN2 1
+#define BIN2 19
+#define PWMA 23
+#define PWMB 3
 
 // IR pins
-#define extremeLeft 1
-#define centerLeft 2
-#define center 3
-#define centerRight 4
-#define extremeRight 5
+#define extremeLeft 34
+#define centerLeft 35
+#define center 32
+#define centerRight 33
+#define extremeRight 25
 
 // Calibration and normal modes' pins
-#define calibration 11
-#define normal 12
+#define calibration 17
+#define normal 16
+
+// Indicators
+#define calibrationLED 15
+#define normalLED 13
 
 // Correction factors for easily modifying motor configuration
 // line up with function names like forward.  Value can be 1 or -1
@@ -31,7 +35,7 @@ Motor rightMotor = Motor(BIN1, BIN2, PWMB, correctionB);
 
 // Motor speeds
 int lsp, rsp;
-int lfspeed = 200; // standard speed can be nodified later
+int lfspeed = 200; // standard speed can be modified later
 
 // PID constants
 float Kp = 0;
@@ -42,45 +46,60 @@ int sp = 0;
 PID carPID(Kp, Ki, Kd); // PID object
 
 // color map values
-int minValues[6], maxValues[6], threshold[6];
+int minValues[5], maxValues[5], threshold[5], sensors[5];
 
 void setup()
 {
   Serial.begin(9600);
   carPID.setSpeeds(lfspeed);
-  pinMode(calibration, INPUT_PULLUP);
-  pinMode(normal, INPUT_PULLUP);
+  pinMode(calibration, INPUT);
+  pinMode(normal, INPUT);
+  pinMode(calibrationLED, OUTPUT);
+  pinMode(normalLED, OUTPUT);
+  digitalWrite(normalLED, LOW);
+  sensors[0] = extremeLeft;
+  sensors[1] = centerLeft;
+  sensors[2] = center;
+  sensors[3] = centerRight;
+  sensors[4] = extremeRight;
 }
 
 
 void loop()
 {
   // waiting for calibration
-  while (digitalRead(calibration)) {}
+  
+  while (!digitalRead(calibration)) {}
+  digitalWrite(calibrationLED, HIGH);
   delay(1000);
-  carPID.calibrate(leftMotor, rightMotor, minValues, maxValues, threshold); // calibration mode
+  carPID.calibrate(leftMotor, rightMotor, minValues, maxValues, threshold, sensors); // calibration mode
+  digitalWrite(calibrationLED, LOW);
   // waiting to be set to normal mode
-  while (digitalRead(normal)) {}
+  while (!digitalRead(normal)) {}
+  digitalWrite(normalLED, HIGH);
   delay(1000);
 
   // Normal mode in action
   while (1)
   {
     // Extreme left turn when extremeLeft sensor detects dark region while extremeRight sensor detects white region
-    if (analogRead(extremeLeft) > threshold[1] && analogRead(extremeRight) < threshold[5] )
+    if (analogRead(extremeLeft) < threshold[0] && analogRead(extremeRight) > threshold[4] )
     {
-      lsp = 0; rsp = lfspeed;
-      leftMotor.drive(0);
-      rightMotor.drive(lfspeed);
+//      lsp = 0; rsp = lfspeed;
+//      leftMotor.drive(0);
+//      rightMotor.drive(lfspeed);
+      left(leftMotor, rightMotor, lfspeed);
     }
 
     // Extreme right turn when extremeRight sensor detects dark region while extremeLeft sensor detects white region
-    else if (analogRead(extremeRight) > threshold[5] && analogRead(extremeLeft) < threshold[1])
-    { lsp = lfspeed; rsp = 0;
-      leftMotor.drive(lfspeed);
-      rightMotor.drive(0);
+    else if (analogRead(extremeRight) < threshold[4] && analogRead(extremeLeft) > threshold[0])
+    { 
+//      lsp = lfspeed; rsp = 0;
+//      leftMotor.drive(lfspeed);
+//      rightMotor.drive(0);
+      right(leftMotor, rightMotor, lfspeed);
     }
-    else if (analogRead(center) > threshold[3])
+    else if (analogRead(center) < threshold[2])
     {
       // arbitrary PID constans will be tuned later
       Kp = 0.0006 * (1000 - analogRead(center));

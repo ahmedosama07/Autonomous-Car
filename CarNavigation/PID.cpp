@@ -68,12 +68,12 @@ void PID::linefollow(Motor leftMotor, Motor rightMotor, int lsp, int rsp)
 }
 
 
-void PID::calibrate(Motor leftMotor, Motor rightMotor, int minValues[], int maxValues[], int threshold[])
+void PID::calibrate(Motor leftMotor, Motor rightMotor, int minValues[], int maxValues[], int threshold[], int sensors[])
 {
-  for ( int i = 1; i < 6; i++)
+  for ( int i = 0; i < 5; i++)
   {
-    minValues[i] = analogRead(i);
-    maxValues[i] = analogRead(i);
+    minValues[i] = analogRead(sensors[i]);
+    maxValues[i] = analogRead(sensors[i]);
   }
   
   for (int i = 0; i < 3000; i++)
@@ -81,20 +81,20 @@ void PID::calibrate(Motor leftMotor, Motor rightMotor, int minValues[], int maxV
     leftMotor.drive(50);
     rightMotor.drive(-50);
 
-    for ( int i = 1; i < 6; i++)
+    for ( int i = 0; i < 5; i++)
     {
-      if (analogRead(i) < minValues[i])
+      if (analogRead(sensors[i]) < minValues[i])
       {
-        minValues[i] = analogRead(i);     //minValues for white regions
+        minValues[i] = analogRead(sensors[i]);     //minValues for white regions
       }
-      if (analogRead(i) > maxValues[i])
+      if (analogRead(sensors[i]) > maxValues[i])
       {
-        maxValues[i] = analogRead(i);     //maxValues for dark regions
+        maxValues[i] = analogRead(sensors[i]);     //maxValues for dark regions
       }
     }
   }
 
-  for ( int i = 1; i < 6; i++)
+  for ( int i = 0; i < 5; i++)
   {
     threshold[i] = (minValues[i] + maxValues[i]) / 2;
     Serial.print(threshold[i]);
@@ -102,6 +102,5 @@ void PID::calibrate(Motor leftMotor, Motor rightMotor, int minValues[], int maxV
   }
   Serial.println();
   
-  leftMotor.drive(0);
-  rightMotor.drive(0);
+  stop(leftMotor, rightMotor);
 }

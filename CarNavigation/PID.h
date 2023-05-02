@@ -11,7 +11,7 @@ class PID
     void setSetpoint(int setPoint);
     void setSpeeds(int v);
     void setConstrains(int lower_bound, int upper_bound);
-    void calibrate(Motor leftMotor, Motor rightMotor, int minValues[], int maxValues[], int threshold[]);
+    void calibrate(Motor leftMotor, Motor rightMotor, int minValues[], int maxValues[], int threshold[], int sensors[]);
     void linefollow(Motor leftMotor, Motor rightMotor, int lsp, int rsp);
   private:
   float kp=0,ki=0,kd=0;
