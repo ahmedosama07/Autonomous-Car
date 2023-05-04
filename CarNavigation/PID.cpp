@@ -1,4 +1,6 @@
 #include "PID.h"
+
+
 PID::PID(float kP, float kI, float kD)
 {
   kp = kP;
@@ -78,8 +80,8 @@ void PID::calibrate(Motor leftMotor, Motor rightMotor, int minValues[], int maxV
   
   for (int i = 0; i < 3000; i++)
   {
-    leftMotor.drive(50);
-    rightMotor.drive(-50);
+    leftMotor.drive(100);
+    rightMotor.drive(-100);
 
     for ( int i = 0; i < 5; i++)
     {
