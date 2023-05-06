@@ -143,13 +143,13 @@ void loop()
     else if (analogRead(center) > threshold[2])
     {
       // arbitrary PID constans will be tuned later
-      Kp = 0.02 * (1000 - analogRead(center)/4);
+      Kp = 0.002 * (1000 - analogRead(center)/4);
       Kd = 10 * Kp;
       //Ki = 0.0001;
       Serial.print("center\t");
       Serial.println(Kp);
       carPID.setConstants(Kp, Ki, Kd);
-      sp = (analogRead(centerLeft) - analogRead(centerRight));
+      sp = (analogRead(centerRight) - analogRead(centerLeft));
       Serial.print("error\t");
       Serial.println(sp);
       carPID.setSetpoint(sp);
