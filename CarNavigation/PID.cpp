@@ -49,8 +49,8 @@ void PID::linefollow(Motor leftMotor, Motor rightMotor, int lsp, int rsp)
   PIDvalue = calculate(error);
   previousError = error;
 
-  lsp = lfspeed + PIDvalue;
-  rsp = lfspeed - PIDvalue;
+  lsp = lfspeed - PIDvalue;
+  rsp = lfspeed + PIDvalue;
 
   if (lsp > 255) {
     lsp = 255;

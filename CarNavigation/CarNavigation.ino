@@ -148,21 +148,18 @@ void loop()
     else if (analogRead(center) > threshold[2])
     {
       // arbitrary PID constans will be tuned later
-      forward(leftMotor, rightMotor, lfspeed);
-      if(analogRead(centerLeft) > threshold[1] || analogRead(centerRight) > threshold[3])
-      {
-        Kp = 0;
-        Kd = 0;
-        Ki = 0;
-        Serial.print("center\t");
-        Serial.println(Kp);
-        carPID.setConstants(Kp, Ki, Kd);
-        sp = (analogRead(centerLeft) - analogRead(centerRight));
-        Serial.print("error\t");
-        Serial.println(sp);
-        carPID.setSetpoint(sp);
-        carPID.linefollow(leftMotor, rightMotor, lsp, rsp);
-      }
+      //forward(leftMotor, rightMotor);
+      Kp = 2;
+      Kd = 0.3;
+      Ki = 0.01;
+      Serial.print("center\t");
+      Serial.println(Kp);
+      carPID.setConstants(Kp, Ki, Kd);
+      sp = (analogRead(centerLeft) - analogRead(centerRight));
+      Serial.print("error\t");
+      Serial.println(sp);
+      carPID.setSetpoint(sp);
+      carPID.linefollow(leftMotor, rightMotor, lsp, rsp);
     }
   }
 }
