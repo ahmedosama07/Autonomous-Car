@@ -130,7 +130,7 @@ void loop()
       Serial.println("left");
       lsp = 0; rsp = lfspeed;
       leftMotor.drive(0);
-      rightMotor.drive(255);
+      rightMotor.drive(rsp);
       SerialBT.println("left");
       //left(leftMotor, rightMotor, lfspeed);
     }
@@ -140,7 +140,7 @@ void loop()
     { 
       Serial.println("right");
       lsp = lfspeed; rsp = 0;
-      leftMotor.drive(255);
+      leftMotor.drive(lsp);
       rightMotor.drive(0);
       SerialBT.println("right");
       //right(leftMotor, rightMotor, lfspeed);
@@ -151,13 +151,13 @@ void loop()
       forward(leftMotor, rightMotor, lfspeed);
       if(analogRead(centerLeft) > threshold[1] || analogRead(centerRight) > threshold[3])
       {
-        Kp = 5;
-        Kd = 0.3;
-        Ki = 0.01;
+        Kp = 0;
+        Kd = 0;
+        Ki = 0;
         Serial.print("center\t");
         Serial.println(Kp);
         carPID.setConstants(Kp, Ki, Kd);
-        sp = (analogRead(centerRight)/2 - analogRead(centerLeft));
+        sp = (analogRead(centerLeft) - analogRead(centerRight));
         Serial.print("error\t");
         Serial.println(sp);
         carPID.setSetpoint(sp);
