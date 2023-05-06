@@ -113,6 +113,7 @@ void loop()
   // Normal mode in action
   while (1)
   {
+    if(digitalRead(normal)) break;
   for ( int i = 0; i < 5; i++)
   {
     Serial.print(analogRead(sensors[i]));
@@ -125,7 +126,7 @@ void loop()
       Serial.println("left");
       lsp = 0; rsp = lfspeed;
       leftMotor.drive(0);
-      rightMotor.drive(lfspeed);
+      rightMotor.drive(255);
       SerialBT.println("left");
       //left(leftMotor, rightMotor, lfspeed);
     }
@@ -135,7 +136,7 @@ void loop()
     { 
       Serial.println("right");
       lsp = lfspeed; rsp = 0;
-      leftMotor.drive(lfspeed);
+      leftMotor.drive(255);
       rightMotor.drive(0);
       SerialBT.println("right");
       //right(leftMotor, rightMotor, lfspeed);
@@ -143,13 +144,14 @@ void loop()
     else if (analogRead(center) > threshold[2])
     {
       // arbitrary PID constans will be tuned later
-      Kp = 0.002 * (1000 - analogRead(center)/4);
-      Kd = 10 * Kp;
-      //Ki = 0.0001;
+      //forward(leftMotor, rightMotor);
+      Kp = 0.2;
+      Kd = 0.3;
+      Ki = 0.01;
       Serial.print("center\t");
       Serial.println(Kp);
       carPID.setConstants(Kp, Ki, Kd);
-      sp = (analogRead(centerRight) - analogRead(centerLeft));
+      sp = (analogRead(centerRight) - analogRead(centerLeft)*2);
       Serial.print("error\t");
       Serial.println(sp);
       carPID.setSetpoint(sp);

@@ -33,7 +33,6 @@ void PID::setConstrains(int lower_bound, int upper_bound)
 
 int PID::calculate(int mv)
 {
-
   P = mv;
   I = I + mv;
   D = mv - previousError;
