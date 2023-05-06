@@ -101,12 +101,14 @@ void loop()
   
   while (!digitalRead(calibration)) {}
   digitalWrite(calibrationLED, HIGH);
+  digitalWrite(normalLED, LOW);
   delay(1000);
   carPID.calibrate(leftMotor, rightMotor, minValues, maxValues, threshold, sensors); // calibration mode
   digitalWrite(calibrationLED, LOW);
   
   // waiting to be set to normal mode
   while (!digitalRead(normal)) {}
+  digitalWrite(calibrationLED, LOW);
   digitalWrite(normalLED, HIGH);
   delay(1000);
 
@@ -116,41 +118,23 @@ void loop()
     if(digitalRead(normal))
     {
       stop(leftMotor, rightMotor);
+      digitalWrite(calibrationLED, LOW);
+      digitalWrite(normalLED, LOW);
       break;
     }
-  for ( int i = 0; i < 5; i++)
-  {
-    Serial.print(analogRead(sensors[i]));
-    Serial.print("   ");
-  }
+    for ( int i = 0; i < 5; i++)
+    {
+      Serial.print(analogRead(sensors[i]));
+      Serial.print("   ");
+    }
   Serial.println();
     // Extreme left turn when extremeLeft sensor detects dark region while extremeRight sensor detects white region
-    if (analogRead(extremeLeft) > threshold[0] && analogRead(extremeRight) < threshold[4] )
-    {
-      Serial.println("left");
-      lsp = 0; rsp = lfspeed;
-      leftMotor.drive(0);
-      rightMotor.drive(rsp);
-      SerialBT.println("left");
-      //left(leftMotor, rightMotor, lfspeed);
-    }
-
-    // Extreme right turn when extremeRight sensor detects dark region while extremeLeft sensor detects white region
-    else if (analogRead(extremeRight) > threshold[4] && analogRead(extremeLeft) < threshold[0])
-    { 
-      Serial.println("right");
-      lsp = lfspeed; rsp = 0;
-      leftMotor.drive(lsp);
-      rightMotor.drive(0);
-      SerialBT.println("right");
-      //right(leftMotor, rightMotor, lfspeed);
-    }
-    else if (analogRead(center) > threshold[2])
+    if (analogRead(center) > threshold[2])
     {
       // arbitrary PID constans will be tuned later
       //forward(leftMotor, rightMotor);
-      Kp = 2;
-      Kd = 0.3;
+      Kp = 5;
+      Kd = 0.5;
       Ki = 0.01;
       Serial.print("center\t");
       Serial.println(Kp);
@@ -160,6 +144,27 @@ void loop()
       Serial.println(sp);
       carPID.setSetpoint(sp);
       carPID.linefollow(leftMotor, rightMotor, lsp, rsp);
+    }
+    // Extreme left turn when extremeLeft sensor detects dark region while extremeRight sensor detects white region
+    else if (analogRead(extremeLeft) > threshold[0] && analogRead(extremeRight) < threshold[4] )
+    {
+      Serial.println("left");
+      lsp = 0; rsp = lfspeed;
+      // leftMotor.drive(0);
+      // rightMotor.drive(rsp);
+      SerialBT.println("left");
+      left(leftMotor, rightMotor, lfspeed);
+    }
+
+    // Extreme right turn when extremeRight sensor detects dark region while extremeLeft sensor detects white region
+    else if (analogRead(extremeRight) > threshold[4] && analogRead(extremeLeft) < threshold[0])
+    { 
+      Serial.println("right");
+      lsp = lfspeed; rsp = 0;
+      // leftMotor.drive(lsp);
+      // rightMotor.drive(0);
+      SerialBT.println("right");
+      right(leftMotor, rightMotor, lfspeed);
     }
   }
 }
