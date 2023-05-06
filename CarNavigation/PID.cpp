@@ -50,8 +50,8 @@ void PID::linefollow(Motor leftMotor, Motor rightMotor, int lsp, int rsp)
   PIDvalue = calculate(error);
   previousError = error;
 
-  lsp = lfspeed - PIDvalue;
-  rsp = lfspeed + PIDvalue;
+  lsp = lfspeed + PIDvalue;
+  rsp = lfspeed - PIDvalue;
 
   if (lsp > 255) {
     lsp = 255;
@@ -65,6 +65,10 @@ void PID::linefollow(Motor leftMotor, Motor rightMotor, int lsp, int rsp)
   if (rsp < 0) {
     rsp = 0;
   }
+  Serial.print("Left: ");
+  Serial.println(lsp);
+  Serial.print("Right: ");
+  Serial.println(rsp);
   leftMotor.drive(lsp);
   rightMotor.drive(rsp);
 }
@@ -78,7 +82,7 @@ void PID::calibrate(Motor leftMotor, Motor rightMotor, int minValues[], int maxV
     maxValues[i] = analogRead(sensors[i]);
   }
   
-  for (int i = 0; i < 3000; i++)
+  for (int i = 0; i < 3500; i++)
   {
     leftMotor.drive(100);
     rightMotor.drive(-100);

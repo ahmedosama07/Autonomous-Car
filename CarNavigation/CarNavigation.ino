@@ -25,6 +25,7 @@ BluetoothSerial SerialBT;
 #define PWMA 23
 #define PWMB 3
 
+
 // IR pins
 #define extremeLeft 34
 #define centerLeft 35
@@ -43,7 +44,7 @@ BluetoothSerial SerialBT;
 // Correction factors for easily modifying motor configuration
 // line up with function names like forward.  Value can be 1 or -1
 const int correctionA = -1;
-const int correctionB = 1;
+const int correctionB = -1;
 
 // Initializing motors.  The library will allow you to initialize as many motors as you have memory for.
 Motor leftMotor = Motor(AIN1, AIN2, PWMA, correctionA);
@@ -51,7 +52,7 @@ Motor rightMotor = Motor(BIN1, BIN2, PWMB, correctionB);
 
 // Motor speeds
 int lsp, rsp;
-int lfspeed = 150; // standard speed can be modified later
+int lfspeed = 200; // standard speed can be modified later
 
 // PID constants
 float Kp = 0;
@@ -103,29 +104,7 @@ void loop()
   delay(1000);
   carPID.calibrate(leftMotor, rightMotor, minValues, maxValues, threshold, sensors); // calibration mode
   digitalWrite(calibrationLED, LOW);
-  Serial.println("main");
-  for ( int i = 0; i < 5; i++)
-  {
-    threshold[i] = (minValues[i] + maxValues[i]) / 2;
-    Serial.print(threshold[i]);
-    Serial.print("   ");
-  }
-  Serial.println();
-  Serial.println("max");
-  for ( int i = 0; i < 5; i++)
-  {
-    Serial.print(maxValues[i]);
-    Serial.print("   ");
-  }
-  Serial.println();
-  Serial.println("min");
-  for ( int i = 0; i < 5; i++)
-  {
-    threshold[i] = (minValues[i] + maxValues[i]) / 2;
-    Serial.print(minValues[i]);
-    Serial.print("   ");
-  }
-  Serial.println();
+  
   // waiting to be set to normal mode
   while (!digitalRead(normal)) {}
   digitalWrite(normalLED, HIGH);
@@ -134,10 +113,8 @@ void loop()
   // Normal mode in action
   while (1)
   {
-    Serial.println("loop");
   for ( int i = 0; i < 5; i++)
   {
-    threshold[i] = (minValues[i] + maxValues[i]) / 2;
     Serial.print(analogRead(sensors[i]));
     Serial.print("   ");
   }
@@ -145,30 +122,36 @@ void loop()
     // Extreme left turn when extremeLeft sensor detects dark region while extremeRight sensor detects white region
     if (analogRead(extremeLeft) > threshold[0] && analogRead(extremeRight) < threshold[4] )
     {
-//      lsp = 0; rsp = lfspeed;
-//      leftMotor.drive(0);
-//      rightMotor.drive(lfspeed);
+      Serial.println("left");
+      lsp = 0; rsp = lfspeed;
+      leftMotor.drive(0);
+      rightMotor.drive(lfspeed);
       SerialBT.println("left");
-      left(leftMotor, rightMotor, lfspeed);
+      //left(leftMotor, rightMotor, lfspeed);
     }
 
     // Extreme right turn when extremeRight sensor detects dark region while extremeLeft sensor detects white region
     else if (analogRead(extremeRight) > threshold[4] && analogRead(extremeLeft) < threshold[0])
     { 
-//      lsp = lfspeed; rsp = 0;
-//      leftMotor.drive(lfspeed);
-//      rightMotor.drive(0);
+      Serial.println("right");
+      lsp = lfspeed; rsp = 0;
+      leftMotor.drive(lfspeed);
+      rightMotor.drive(0);
       SerialBT.println("right");
-      right(leftMotor, rightMotor, lfspeed);
+      //right(leftMotor, rightMotor, lfspeed);
     }
     else if (analogRead(center) > threshold[2])
     {
       // arbitrary PID constans will be tuned later
-      Kp = 0.022 * (4000 - analogRead(center));
+      Kp = 0.02 * (1000 - analogRead(center)/4);
       Kd = 10 * Kp;
       //Ki = 0.0001;
+      Serial.print("center\t");
+      Serial.println(Kp);
       carPID.setConstants(Kp, Ki, Kd);
       sp = (analogRead(centerLeft) - analogRead(centerRight));
+      Serial.print("error\t");
+      Serial.println(sp);
       carPID.setSetpoint(sp);
       carPID.linefollow(leftMotor, rightMotor, lsp, rsp);
     }
