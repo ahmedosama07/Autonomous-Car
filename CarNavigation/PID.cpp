@@ -83,8 +83,8 @@ void PID::calibrate(Motor leftMotor, Motor rightMotor, int minValues[], int maxV
   
   for (int i = 0; i < 3500; i++)
   {
-    leftMotor.drive(100);
-    rightMotor.drive(-100);
+    leftMotor.drive(60);
+    rightMotor.drive(-60);
 
     for ( int i = 0; i < 5; i++)
     {
