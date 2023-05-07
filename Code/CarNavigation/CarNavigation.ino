@@ -52,7 +52,7 @@ Motor rightMotor = Motor(BIN1, BIN2, PWMB, correctionB);
 
 // Motor speeds
 int lsp, rsp;
-int lfspeed = 200; // standard speed can be modified later
+int lfspeed = 255; // standard speed can be modified later
 
 // PID constants
 float Kp = 0;
@@ -122,48 +122,48 @@ void loop()
       digitalWrite(normalLED, LOW);
       break;
     }
-    for ( int i = 0; i < 5; i++)
+    /*for ( int i = 0; i < 5; i++)
     {
       Serial.print(analogRead(sensors[i]));
       Serial.print("   ");
     }
-  Serial.println();
+  Serial.println();*/
     // Extreme left turn when extremeLeft sensor detects dark region while extremeRight sensor detects white region
     if (analogRead(center) > threshold[2])
     {
       // arbitrary PID constans will be tuned later
       //forward(leftMotor, rightMotor);
       Kp = 5;
-      Kd = 0.5;
-      Ki = 0.01;
-      Serial.print("center\t");
-      Serial.println(Kp);
+      Kd = 1;
+      Ki = 0.001;
+      //Serial.print("center\t");
+      //Serial.println(Kp);
       carPID.setConstants(Kp, Ki, Kd);
       sp = (analogRead(centerLeft) - analogRead(centerRight));
-      Serial.print("error\t");
-      Serial.println(sp);
+      //Serial.print("error\t");
+      //Serial.println(sp);
       carPID.setSetpoint(sp);
       carPID.linefollow(leftMotor, rightMotor, lsp, rsp);
     }
     // Extreme left turn when extremeLeft sensor detects dark region while extremeRight sensor detects white region
     else if (analogRead(extremeLeft) > threshold[0] && analogRead(extremeRight) < threshold[4] )
     {
-      Serial.println("left");
+      //Serial.println("left");
       lsp = 0; rsp = lfspeed;
       // leftMotor.drive(0);
       // rightMotor.drive(rsp);
-      SerialBT.println("left");
+      //SerialBT.println("left");
       left(leftMotor, rightMotor, lfspeed);
     }
 
     // Extreme right turn when extremeRight sensor detects dark region while extremeLeft sensor detects white region
     else if (analogRead(extremeRight) > threshold[4] && analogRead(extremeLeft) < threshold[0])
     { 
-      Serial.println("right");
+      //Serial.println("right");
       lsp = lfspeed; rsp = 0;
       // leftMotor.drive(lsp);
       // rightMotor.drive(0);
-      SerialBT.println("right");
+      //SerialBT.println("right");
       right(leftMotor, rightMotor, lfspeed);
     }
   }
