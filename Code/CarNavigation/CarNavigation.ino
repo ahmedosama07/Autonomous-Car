@@ -7,14 +7,6 @@
 #error Bluetooth is not enabled! Please run `make menuconfig` to and enable it
 #endif
 
-#if !defined(CONFIG_BT_SPP_ENABLED)
-#error Serial Bluetooth not available or not enabled. It is only available for the ESP32 chip.
-#endif
-
-const char *pin = "1234"; // Change this to more secure PIN.
-
-String device_name = "ESP32-BT-Slave";
-
 BluetoothSerial SerialBT;
 
 // Motor pins
@@ -68,13 +60,8 @@ int minValues[5], maxValues[5], threshold[5], sensors[5];
 void setup()
 {
   Serial.begin(115200);
-  SerialBT.begin(device_name); //Bluetooth device name
-  Serial.printf("The device with name \"%s\" is started.\nNow you can pair it with Bluetooth!\n", device_name.c_str());
-
-  #ifdef USE_PIN
-    SerialBT.setPin(pin);
-    Serial.println("Using PIN");
-  #endif
+  SerialBT.begin();
+  Serial.println("Car Started! Ready to pair...");
   
   carPID.setSpeeds(lfspeed);
   pinMode(calibration, INPUT);
@@ -100,6 +87,7 @@ void loop()
   // waiting for calibration
   
   while (!digitalRead(calibration)) {}
+  SerialBT.print("Calibrating...\n");
   digitalWrite(calibrationLED, HIGH);
   digitalWrite(normalLED, LOW);
   delay(1000);
@@ -108,6 +96,7 @@ void loop()
   
   // waiting to be set to normal mode
   while (!digitalRead(normal)) {}
+  SerialBT.print("Running...brrrr\n");
   digitalWrite(calibrationLED, LOW);
   digitalWrite(normalLED, HIGH);
   delay(1000);
@@ -117,6 +106,7 @@ void loop()
   {
     if(digitalRead(normal))
     {
+      SerialBT.print("Stopping...\n");
       stop(leftMotor, rightMotor);
       digitalWrite(calibrationLED, LOW);
       digitalWrite(normalLED, LOW);
