@@ -8,6 +8,7 @@
 #endif
 
 BluetoothSerial SerialBT;
+String message = "";
 
 // Motor pins
 #define AIN1 22
@@ -60,7 +61,7 @@ int minValues[5], maxValues[5], threshold[5], sensors[5];
 void setup()
 {
   Serial.begin(115200);
-  SerialBT.begin();
+  SerialBT.begin("Hossam Hassan");
   Serial.println("Car Started! Ready to pair...");
   
   carPID.setSpeeds(lfspeed);
@@ -83,11 +84,21 @@ void setup()
 
 
 void loop()
-{
+{ 
   // waiting for calibration
-  
-  while (!digitalRead(calibration)) {}
-  SerialBT.print("Calibrating...\n");
+  while ((!digitalRead(calibration)) && (message != "0")) {
+      if (SerialBT.available()){
+        char incomingChar = SerialBT.read();
+        if (incomingChar != '\n'){
+          message += String(incomingChar);
+        }
+        else{
+          message = "";
+        }
+      }
+    }
+  SerialBT.println("Calibrating...");
+  Serial.println("Calibrating...");
   digitalWrite(calibrationLED, HIGH);
   digitalWrite(normalLED, LOW);
   delay(1000);
@@ -95,8 +106,19 @@ void loop()
   digitalWrite(calibrationLED, LOW);
   
   // waiting to be set to normal mode
-  while (!digitalRead(normal)) {}
-  SerialBT.print("Running...brrrr\n");
+  while ((!digitalRead(normal)) && (message != "1")) {
+    if (SerialBT.available()){
+        char incomingChar = SerialBT.read();
+        if (incomingChar != '\n'){
+          message += String(incomingChar);
+        }
+        else{
+          message = "";
+        }
+      }
+    }
+  SerialBT.println("Running...brrrr\n");
+  Serial.println("Running...brrrr\n");
   digitalWrite(calibrationLED, LOW);
   digitalWrite(normalLED, HIGH);
   delay(1000);
@@ -104,9 +126,18 @@ void loop()
   // Normal mode in action
   while (1)
   {
-    if(digitalRead(normal))
+    if (SerialBT.available()){
+    char incomingChar = SerialBT.read();
+    if (incomingChar != '\n'){
+      message += String(incomingChar);
+    }
+    else{
+      message = "";
+    }
+  }
+    if(digitalRead(normal) || message == "1")
     {
-      SerialBT.print("Stopping...\n");
+      SerialBT.println("Stopping...");
       stop(leftMotor, rightMotor);
       digitalWrite(calibrationLED, LOW);
       digitalWrite(normalLED, LOW);
