@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:AutonomousCar/device.dart';
-import 'package:AutonomousCar/car.dart';
 
 class SelectBondedDevicePage extends StatefulWidget {
   /// If true, on page start there is performed discovery upon the bonded devices.
@@ -70,14 +69,6 @@ class _SelectBondedDevicePage extends State<SelectBondedDevicePage> {
     });
   }
 
-  void _restartDiscovery() {
-    setState(() {
-      _isDiscovering = true;
-    });
-
-    _startDiscovery();
-  }
-
   void _startDiscovery() {
     _discoveryStreamSubscription =
         FlutterBluetoothSerial.instance.startDiscovery().listen((r) {
@@ -114,8 +105,6 @@ class _SelectBondedDevicePage extends State<SelectBondedDevicePage> {
         .map(
           (_device) => BluetoothDeviceListEntry(
             device: _device.device,
-            // rssi: _device.rssi,
-            // enabled: _device.availability == _DeviceAvailability.yes,
             onTap: () {
               widget.onCahtPage(_device.device);
             },
@@ -125,28 +114,5 @@ class _SelectBondedDevicePage extends State<SelectBondedDevicePage> {
     return ListView(
       children: list,
     );
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     title: Text('Select device'),
-    //     actions: <Widget>[
-    //       _isDiscovering
-    //           ? FittedBox(
-    //               child: Container(
-    //                 margin: new EdgeInsets.all(16.0),
-    //                 child: CircularProgressIndicator(
-    //                   valueColor: AlwaysStoppedAnimation<Color>(
-    //                     Colors.white,
-    //                   ),
-    //                 ),
-    //               ),
-    //             )
-    //           : IconButton(
-    //               icon: Icon(Icons.replay),
-    //               onPressed: _restartDiscovery,
-    //             )
-    //     ],
-    //   ),
-    //   body: ListView(children: list),
-    // );
   }
 }

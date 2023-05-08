@@ -237,7 +237,19 @@ class _ChatPage extends State<ChatPage> {
         await connection.output.allSent;
 
         setState(() {
-          messages.add(_Message(clientID, text));
+          if(text == "1")
+          {
+            messages.add(_Message(clientID, "start command"));
+          }
+          else if(text == "0")
+          {
+            messages.add(_Message(clientID, "calibration command"));
+          }
+          else
+          {
+            messages.add(_Message(clientID, text));
+          }
+          
         });
 
         Future.delayed(Duration(milliseconds: 333)).then((_) {
