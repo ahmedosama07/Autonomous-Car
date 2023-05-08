@@ -5,7 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "C:\\MinGW\\include",
-                "D:\\Engineering\\College\\Year 2\\Second Term\\Microprocessors\\Projects\\Autonomous-Car\\CarNavigation"
+                "D:\\Engineering\\College\\Year 2\\Second Term\\Microprocessors\\Projects\\Autonomous-Car\\Code\\CarNavigation"
             ],
             "defines": [
                 "_DEBUG",

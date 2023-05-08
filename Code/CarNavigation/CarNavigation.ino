@@ -65,6 +65,7 @@ void setup()
   Serial.println("Car Started! Ready to pair...");
   
   carPID.setSpeeds(lfspeed);
+  carPID.setConstrains(0, 255);
   pinMode(calibration, INPUT);
   pinMode(normal, INPUT);
   pinMode(calibrationLED, OUTPUT);

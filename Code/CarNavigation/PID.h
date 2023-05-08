@@ -16,7 +16,7 @@ class PID
     void calibrate(Motor leftMotor, Motor rightMotor, int minValues[], int maxValues[], int threshold[], int sensors[]);
     void linefollow(Motor leftMotor, Motor rightMotor, int lsp, int rsp);
   private:
-  float kp=0,ki=0,kd=0;
+    float kp=0,ki=0,kd=0;
     int sp = 0;
     int error = 0;
     int lfspeed = 0;
