@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
-import 'package:mm_app/connection.dart';
-import 'package:mm_app/car.dart';
+import 'package:AutonomousCar/connection.dart';
+import 'package:AutonomousCar/car.dart';
 
 void main() {
   runApp(MyApp());

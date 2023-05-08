@@ -42,7 +42,7 @@ aaptOptions { cruncherEnabled = false }
         configurations.all {
     resolutionStrategy { force 'androidx.core:core:1.6.0' }
 }
-        applicationId "com.example.mm_app"
+        applicationId "com.example.AutonomousCar"
         minSdkVersion 28
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
