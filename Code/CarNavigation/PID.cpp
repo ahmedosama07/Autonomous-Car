@@ -64,10 +64,7 @@ void PID::linefollow(Motor leftMotor, Motor rightMotor, int lsp, int rsp)
   if (rsp < lower) {
     rsp = lower;
   }
-  //Serial.print("Left: ");
-  //Serial.println(lsp);
-  //Serial.print("Right: ");
-  //Serial.println(rsp);
+  
   leftMotor.drive(lsp);
   rightMotor.drive(rsp);
 }
@@ -102,10 +99,7 @@ void PID::calibrate(Motor leftMotor, Motor rightMotor, int minValues[], int maxV
   for ( int i = 0; i < 5; i++)
   {
     threshold[i] = (minValues[i] + maxValues[i]) / 2;
-    //Serial.print(threshold[i]);
-    //Serial.print("   ");
-  }
-  //Serial.println();
-  
+    
+  }  
   stop(leftMotor, rightMotor);
 }
