@@ -52,17 +52,17 @@ void PID::linefollow(Motor leftMotor, Motor rightMotor, int lsp, int rsp)
   lsp = lfspeed - PIDvalue;
   rsp = lfspeed + PIDvalue;
 
-  if (lsp > 255) {
-    lsp = 255;
+  if (lsp > upper) {
+    lsp = upper;
   }
-  if (lsp < 0) {
-    lsp = 0;
+  if (lsp < lower) {
+    lsp = lower;
   }
-  if (rsp > 255) {
-    rsp = 255;
+  if (rsp > upper) {
+    rsp = upper;
   }
-  if (rsp < 0) {
-    rsp = 0;
+  if (rsp < lower) {
+    rsp = lower;
   }
   //Serial.print("Left: ");
   //Serial.println(lsp);
@@ -81,7 +81,7 @@ void PID::calibrate(Motor leftMotor, Motor rightMotor, int minValues[], int maxV
     maxValues[i] = analogRead(sensors[i]);
   }
   
-  for (int i = 0; i < 3500; i++)
+  for (int i = 0; i < 4500; i++)
   {
     leftMotor.drive(60);
     rightMotor.drive(-60);
