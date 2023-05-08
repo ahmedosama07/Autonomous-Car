@@ -66,6 +66,12 @@ void setup()
   
   carPID.setSpeeds(lfspeed);
   carPID.setConstrains(0, 255);
+
+  Kp = 5;
+  Kd = 1;
+  Ki = 0.001;
+  carPID.setConstants(Kp, Ki, Kd);
+  
   pinMode(calibration, INPUT);
   pinMode(normal, INPUT);
   pinMode(calibrationLED, OUTPUT);
@@ -191,13 +197,13 @@ void loop()
     else if (analogRead(center) > threshold[2])
     {
       // arbitrary PID constans will be tuned later
-      //forward(leftMotor, rightMotor);
-      Kp = 5;
-      Kd = 1;
-      Ki = 0.001;
-      //Serial.print("center\t");
-      //Serial.println(Kp);
-      carPID.setConstants(Kp, Ki, Kd);
+      // forward(leftMotor, rightMotor);
+      // Kp = 5;
+      // Kd = 1;
+      // Ki = 0.001;
+      // Serial.print("center\t");
+      // Serial.println(Kp);
+      // carPID.setConstants(Kp, Ki, Kd);
       sp = (analogRead(centerLeft) - analogRead(centerRight));
       //Serial.print("error\t");
       //Serial.println(sp);
