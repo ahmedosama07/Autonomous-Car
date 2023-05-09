@@ -178,10 +178,10 @@ void loop()
     {
       //Serial.println("left");
       lsp = 0; rsp = lfspeed;
-      // leftMotor.drive(0);
-      // rightMotor.drive(rsp);
+      leftMotor.drive(0);
+      rightMotor.drive(rsp);
       //SerialBT.println("left");
-      left(leftMotor, rightMotor, lfspeed);
+      //left(leftMotor, rightMotor, lfspeed);
     }
 
     // Extreme right turn when extremeRight sensor detects dark region while extremeLeft sensor detects white region
@@ -189,10 +189,10 @@ void loop()
     { 
       //Serial.println("right");
       lsp = lfspeed; rsp = 0;
-      // leftMotor.drive(lsp);
-      // rightMotor.drive(0);
+      leftMotor.drive(lsp);
+      rightMotor.drive(0);
       //SerialBT.println("right");
-      right(leftMotor, rightMotor, lfspeed);
+      //right(leftMotor, rightMotor, lfspeed);
     }
     else if (analogRead(center) > threshold[2])
     {

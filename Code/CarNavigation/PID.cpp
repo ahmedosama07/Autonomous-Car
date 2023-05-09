@@ -81,7 +81,7 @@ void PID::calibrate(Motor leftMotor, Motor rightMotor, int minValues[], int maxV
     maxValues[i] = analogRead(sensors[i]);
   }
   
-  for (int i = 0; i < 4500; i++)
+  for (int i = 0; i < 5000; i++)
   {
     leftMotor.drive(60);
     rightMotor.drive(-60);
